@@ -5,6 +5,11 @@ import com.lemndo.blog.entity.SysUser;
 import com.lemndo.blog.mapper.SysUserMapper;
 import com.lemndo.blog.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lemndo.blog.service.LoginService;
+import com.lemndo.blog.vo.ErrorCode;
+import com.lemndo.blog.vo.LoginUserVo;
+import com.lemndo.blog.vo.Result;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +26,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private LoginService loginService;
 
     @Override
     public SysUser findUserById(Long id) {
@@ -40,5 +48,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         queryWrapper.select(SysUser::getAccount, SysUser::getId, SysUser::getAvatar, SysUser::getNickname);
         queryWrapper.last("limit 1");
         return sysUserMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public Result findUserByToken(String token) {
+        /**
+         * 1.token合法性校验
+         * 是否为空， 解析是否成功 redis是否存在
+         * 2.如果校验失败 返回错误
+         * 3.如果成功，返回对应的结果 LoginUserVo
+         */
+
+        SysUser sysUser = loginService.checkToken(token);
+        if (sysUser == null) {
+            Result.fail(ErrorCode.TOKEN_ILLEGAL.getCode(), ErrorCode.TOKEN_ILLEGAL.getMsg());
+        }
+        LoginUserVo loginUserVo = new LoginUserVo();
+        loginUserVo.setId(sysUser.getId());
+        loginUserVo.setAccount(sysUser.getAccount());
+        loginUserVo.setAvatar(sysUser.getAvatar());
+        loginUserVo.setNickname(sysUser.getNickname());
+        return Result.success(loginUserVo);
     }
 }
