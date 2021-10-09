@@ -65,4 +65,9 @@ public class ArticleController {
         int limit = 5;
         return articleService.newArticle(limit);
     }
+
+    @PostMapping("listArchives")
+    public Result listArchives() {
+        return articleService.listArchives();
+    }
 }

@@ -30,4 +30,10 @@ public interface IArticleService extends IService<Article> {
     Result hotArticle(int limit);
 
     Result newArticle(int limit);
+
+    /**
+     * 文章归档
+     * @return
+     */
+    Result listArchives();
 }
