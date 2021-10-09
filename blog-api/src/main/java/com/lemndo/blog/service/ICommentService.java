@@ -3,6 +3,7 @@ package com.lemndo.blog.service;
 import com.lemndo.blog.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lemndo.blog.vo.Result;
+import com.lemndo.blog.vo.params.CommentParam;
 
 /**
  * <p>
@@ -20,4 +21,11 @@ public interface ICommentService extends IService<Comment> {
      * @return
      */
     Result commentsByArticleId(Long id);
+
+    /**
+     * 评论
+     * @param commentParam
+     * @return
+     */
+    Result comment(CommentParam commentParam);
 }

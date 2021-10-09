@@ -25,7 +25,7 @@ public class Comment implements Serializable {
 
     private Long createDate;
 
-    private Integer articleId;
+    private Long articleId;
 
     private Long authorId;
 
@@ -56,11 +56,11 @@ public class Comment implements Serializable {
     public void setCreateDate(Long createDate) {
         this.createDate = createDate;
     }
-    public Integer getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(Integer articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
     public Long getAuthorId() {
