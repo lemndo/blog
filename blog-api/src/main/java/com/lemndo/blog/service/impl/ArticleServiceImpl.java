@@ -58,6 +58,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
          */
         Page<Article> page = new Page<>(pageParams.getPage(), pageParams.getPaSize());
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(Article::getWeight,Article::getCreateDate);
         Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
         List<Article> records = articlePage.getRecords();
         List<ArticleVo> articleVoList = copyList(records, true, true);
