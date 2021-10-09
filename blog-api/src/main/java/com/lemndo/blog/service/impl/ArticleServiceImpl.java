@@ -41,6 +41,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private IArticleBodyService articleBodyService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private ThreadService threadService;
 
     @Override
     public List<ArticleVo> listArticlePage(PageParams pageParams) {
@@ -108,6 +110,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
          */
         Article article = this.articleMapper.selectById(articleId);
         ArticleVo articleVo = copy(article, true, true, true, true);
+        /**
+         * 使用线程池更新阅读数
+         */
+        threadService.updateArticleViewCount(articleMapper,article);
         return Result.success(articleVo);
     }
 
