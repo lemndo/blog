@@ -24,10 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -148,7 +147,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setTitle(articleParam.getTitle());
         article.setSummary(articleParam.getSummary());
         article.setCommentCounts(0);
-        article.setCreateDate(System.currentTimeMillis());
+        Timestamp formatDate = new Timestamp(System.currentTimeMillis());
+        article.setCreateDate(formatDate);
         article.setCategoryId(articleParam.getCategory().getId());
         //插入之后 会生成一个文章id
         this.articleMapper.insert(article);

@@ -3,7 +3,11 @@ package com.lemndo.blog.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <p>
@@ -14,6 +18,7 @@ import java.io.Serializable;
  * @since 2021-10-09
  */
 @TableName("ms_article")
+@Data
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,7 +34,7 @@ public class Article implements Serializable {
     /**
      * 创建时间
      */
-    private Long createDate;
+    private Timestamp createDate;
 
     /**
      * 简介
@@ -66,90 +71,5 @@ public class Article implements Serializable {
      */
     private Long categoryId;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Integer getCommentCounts() {
-        return commentCounts;
-    }
-
-    public void setCommentCounts(Integer commentCounts) {
-        this.commentCounts = commentCounts;
-    }
-    public Long getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Long createDate) {
-        this.createDate = createDate;
-    }
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public Integer getViewCounts() {
-        return viewCounts;
-    }
-
-    public void setViewCounts(Integer viewCounts) {
-        this.viewCounts = viewCounts;
-    }
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-    public Long getBodyId() {
-        return bodyId;
-    }
-
-    public void setBodyId(Long bodyId) {
-        this.bodyId = bodyId;
-    }
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-            "id=" + id +
-            ", commentCounts=" + commentCounts +
-            ", createDate=" + createDate +
-            ", summary=" + summary +
-            ", title=" + title +
-            ", viewCounts=" + viewCounts +
-            ", weight=" + weight +
-            ", authorId=" + authorId +
-            ", bodyId=" + bodyId +
-            ", categoryId=" + categoryId +
-        "}";
-    }
 }
