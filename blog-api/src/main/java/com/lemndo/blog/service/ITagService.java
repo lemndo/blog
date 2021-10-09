@@ -19,4 +19,10 @@ public interface ITagService extends IService<Tag> {
     List<TagVo> findTagsByArticleId(Long articleId);
 
     Result hots(int limit);
+
+    /**
+     * 查询所有标签
+     * @return
+     */
+    Result findAll();
 }

@@ -22,7 +22,7 @@ public interface TagMapper extends BaseMapper<Tag> {
      * @param articleId
      * @return
      */
-    List<TagVo> findTagsByArticleId(Long articleId);
+    List<Tag> findTagsByArticleId(Long articleId);
 
     /**
      * 查询最热的标签前n条

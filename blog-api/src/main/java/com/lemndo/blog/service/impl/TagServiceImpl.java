@@ -1,5 +1,6 @@
 package com.lemndo.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lemndo.blog.entity.Tag;
 import com.lemndo.blog.mapper.TagMapper;
 import com.lemndo.blog.service.ITagService;
@@ -31,7 +32,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
 
     @Override
     public List<TagVo> findTagsByArticleId(Long articleId) {
-        List<TagVo> tags = tagMapper.findTagsByArticleId(articleId);
+        List<Tag> tags = tagMapper.findTagsByArticleId(articleId);
         return copyList(tags);
     }
 
@@ -50,14 +51,21 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         return Result.success(tagList);
     }
 
-    public TagVo copy(TagVo tag){
+    @Override
+    public Result findAll() {
+        List<Tag> tags = this.tagMapper.selectList(new LambdaQueryWrapper<>());
+
+        return Result.success(copyList(tags));
+    }
+
+    public TagVo copy(Tag tag){
         TagVo tagVo = new TagVo();
         BeanUtils.copyProperties(tag,tagVo);
         return tagVo;
     }
-    public List<TagVo> copyList(List<TagVo> tagList){
+    public List<TagVo> copyList(List<Tag> tagList){
         List<TagVo> tagVoList = new ArrayList<>();
-        for (TagVo tag : tagList) {
+        for (Tag tag : tagList) {
             tagVoList.add(copy(tag));
         }
         return tagVoList;
