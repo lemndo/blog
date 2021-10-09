@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lemndo.blog.mapper.ArticleMapper">
 
+    <select id="listArchives" resultType="com.lemndo.blog.dao.dos.Archives">
+        select year(create_date) as year,month(create_date) as month,count(*) as count from ms_article group by year,month
+    </select>
 </mapper>
