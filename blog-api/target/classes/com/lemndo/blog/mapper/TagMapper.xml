@@ -5,7 +5,7 @@
         id,avatar,tag_name as tagName
     </sql>
 
-    <select id="findTagsByArticleId" parameterType="long" resultType="com.lemndo.blog.vo.TagVo">
+    <select id="findTagsByArticleId" parameterType="long" resultType="com.lemndo.blog.entity.Tag">
         select <include refid="all" />  from ms_tag
         <where>
             id in

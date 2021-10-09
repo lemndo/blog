@@ -4,6 +4,7 @@ import com.lemndo.blog.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lemndo.blog.vo.ArticleVo;
 import com.lemndo.blog.vo.Result;
+import com.lemndo.blog.vo.params.ArticleParam;
 import com.lemndo.blog.vo.params.PageParams;
 
 import java.util.List;
@@ -43,4 +44,11 @@ public interface IArticleService extends IService<Article> {
      * @return
      */
     Result findArticleById(Long articleId);
+
+    /**
+     * 发布文章
+     * @param articleParam
+     * @return
+     */
+    Result publish(ArticleParam articleParam);
 }

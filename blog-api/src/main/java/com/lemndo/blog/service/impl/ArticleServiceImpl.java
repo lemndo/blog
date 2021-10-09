@@ -4,12 +4,20 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lemndo.blog.dao.dos.Archives;
 import com.lemndo.blog.entity.Article;
+import com.lemndo.blog.entity.ArticleBody;
+import com.lemndo.blog.entity.ArticleTag;
+import com.lemndo.blog.entity.SysUser;
 import com.lemndo.blog.mapper.ArticleBodyMapper;
 import com.lemndo.blog.mapper.ArticleMapper;
+import com.lemndo.blog.mapper.ArticleTagMapper;
 import com.lemndo.blog.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lemndo.blog.utils.UserThreadLocal;
 import com.lemndo.blog.vo.ArticleVo;
 import com.lemndo.blog.vo.Result;
+import com.lemndo.blog.vo.TagVo;
+import com.lemndo.blog.vo.UserVo;
+import com.lemndo.blog.vo.params.ArticleParam;
 import com.lemndo.blog.vo.params.PageParams;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +25,9 @@ import org.springframework.stereotype.Service;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -34,6 +44,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private ArticleMapper articleMapper;
     @Autowired
+    private ArticleBodyMapper articleBodyMapper;
+    @Autowired
     private ITagService tagService;
     @Autowired
     private ISysUserService sysUserService;
@@ -43,6 +55,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ICategoryService categoryService;
     @Autowired
     private ThreadService threadService;
+    @Autowired
+    private ArticleTagMapper articleTagMapper;
 
     @Override
     public List<ArticleVo> listArticlePage(PageParams pageParams) {
@@ -115,6 +129,51 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
          */
         threadService.updateArticleViewCount(articleMapper,article);
         return Result.success(articleVo);
+    }
+
+    @Override
+    public Result publish(ArticleParam articleParam) {
+        //此接口要加入到登录拦截器当中
+        SysUser sysUser = UserThreadLocal.get();
+        /**
+         * 1.发布文章 目的构建Article对象
+         * 2.作者id 当前的登录用户
+         * 3.将文章选择的标签加入到关联列表
+         * 4.body 内容存储 article bodyId
+         */
+        Article article = new Article();
+        article.setAuthorId(sysUser.getId());
+        article.setWeight(0);
+        article.setViewCounts(0);
+        article.setTitle(articleParam.getTitle());
+        article.setSummary(articleParam.getSummary());
+        article.setCommentCounts(0);
+        article.setCreateDate(System.currentTimeMillis());
+        article.setCategoryId(articleParam.getCategory().getId());
+        //插入之后 会生成一个文章id
+        this.articleMapper.insert(article);
+        //tag
+        List<TagVo> tags = articleParam.getTags();
+        if (tags != null) {
+            for (TagVo tag : tags) {
+                Long articleId = article.getId();
+                ArticleTag articleTag = new ArticleTag();
+                articleTag.setTagId(tag.getId());
+                articleTag.setArticleId(articleId);
+                articleTagMapper.insert(articleTag);
+            }
+        }
+        //body
+        ArticleBody articleBody = new ArticleBody();
+        articleBody.setArticleId(article.getId());
+        articleBody.setContent(articleParam.getBody().getContentHtml());
+        articleBodyMapper.insert(articleBody);
+        article.setBodyId(articleBody.getId());
+        articleMapper.updateById(article);
+        //直接转为String也没有精度损失的问题
+        Map<String, String> map = new HashMap<>();
+        map.put("id", article.getId().toString());
+        return Result.success(map);
     }
 
     private List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {
