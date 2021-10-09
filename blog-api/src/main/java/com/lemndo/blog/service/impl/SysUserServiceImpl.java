@@ -9,7 +9,6 @@ import com.lemndo.blog.service.LoginService;
 import com.lemndo.blog.vo.ErrorCode;
 import com.lemndo.blog.vo.LoginUserVo;
 import com.lemndo.blog.vo.Result;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +68,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         loginUserVo.setAvatar(sysUser.getAvatar());
         loginUserVo.setNickname(sysUser.getNickname());
         return Result.success(loginUserVo);
+    }
+
+    @Override
+    public SysUser findUserByAccount(String account) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getAccount, account);
+        queryWrapper.last("limit 1");
+        return this.sysUserMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public boolean save(SysUser sysUser) {
+        this.sysUserMapper.insert(sysUser);
+        return true;
     }
 }

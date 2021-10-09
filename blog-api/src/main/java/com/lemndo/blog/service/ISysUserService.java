@@ -23,4 +23,6 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     Result findUserByToken(String token);
+
+    SysUser findUserByAccount(String account);
 }

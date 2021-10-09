@@ -29,7 +29,7 @@ public class SysUser implements Serializable {
     /**
      * 是否管理员
      */
-    private Boolean admin;
+    private Integer admin;
 
     /**
      * 头像
@@ -44,7 +44,7 @@ public class SysUser implements Serializable {
     /**
      * 是否删除
      */
-    private Boolean deleted;
+    private Integer deleted;
 
     /**
      * 邮箱
@@ -95,11 +95,11 @@ public class SysUser implements Serializable {
     public void setAccount(String account) {
         this.account = account;
     }
-    public Boolean getAdmin() {
+    public Integer getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(Integer admin) {
         this.admin = admin;
     }
     public String getAvatar() {
@@ -116,11 +116,11 @@ public class SysUser implements Serializable {
     public void setCreateDate(Long createDate) {
         this.createDate = createDate;
     }
-    public Boolean getDeleted() {
+    public Integer getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
     public String getEmail() {
