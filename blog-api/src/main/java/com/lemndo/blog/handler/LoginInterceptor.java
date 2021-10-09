@@ -3,6 +3,7 @@ package com.lemndo.blog.handler;
 import com.alibaba.fastjson.JSON;
 import com.lemndo.blog.entity.SysUser;
 import com.lemndo.blog.service.LoginService;
+import com.lemndo.blog.utils.UserThreadLocal;
 import com.lemndo.blog.vo.ErrorCode;
 import com.lemndo.blog.vo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +55,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         //登录验证成功，放行
+        UserThreadLocal.put(sysUser);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        //如果不删除ThreadLocal中用完的信息，会有内存泄漏的风险
+        UserThreadLocal.remove();
     }
 }

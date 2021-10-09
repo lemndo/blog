@@ -64,7 +64,7 @@ public class Article implements Serializable {
     /**
      * 类别id
      */
-    private Integer categoryId;
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -129,11 +129,11 @@ public class Article implements Serializable {
     public void setBodyId(Long bodyId) {
         this.bodyId = bodyId;
     }
-    public Integer getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

@@ -6,12 +6,9 @@ import com.lemndo.blog.vo.ArticleVo;
 import com.lemndo.blog.vo.Result;
 import com.lemndo.blog.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -69,5 +66,10 @@ public class ArticleController {
     @PostMapping("listArchives")
     public Result listArchives() {
         return articleService.listArchives();
+    }
+
+    @PostMapping("view/{id}")
+    public Result findArticleById(@PathVariable("id") Long articleId) {
+        return articleService.findArticleById(articleId);
     }
 }

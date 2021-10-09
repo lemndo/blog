@@ -2,6 +2,7 @@ package com.lemndo.blog.service;
 
 import com.lemndo.blog.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lemndo.blog.vo.ArticleBodyVo;
 import com.lemndo.blog.vo.Result;
 
 /**
@@ -25,4 +26,5 @@ public interface ISysUserService extends IService<SysUser> {
     Result findUserByToken(String token);
 
     SysUser findUserByAccount(String account);
+
 }
