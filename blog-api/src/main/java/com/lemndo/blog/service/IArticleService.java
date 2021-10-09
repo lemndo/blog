@@ -28,4 +28,6 @@ public interface IArticleService extends IService<Article> {
      * @return
      */
     Result hotArticle(int limit);
+
+    Result newArticle(int limit);
 }
