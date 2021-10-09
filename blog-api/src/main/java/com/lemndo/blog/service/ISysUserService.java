@@ -4,6 +4,7 @@ import com.lemndo.blog.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lemndo.blog.vo.ArticleBodyVo;
 import com.lemndo.blog.vo.Result;
+import com.lemndo.blog.vo.UserVo;
 
 /**
  * <p>
@@ -14,6 +15,9 @@ import com.lemndo.blog.vo.Result;
  * @since 2021-10-09
  */
 public interface ISysUserService extends IService<SysUser> {
+
+    UserVo findUserVoById(Long id);
+
     SysUser findUserById(Long id);
 
     SysUser findUser(String account, String password);

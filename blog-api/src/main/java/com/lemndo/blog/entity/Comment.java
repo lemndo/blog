@@ -33,7 +33,7 @@ public class Comment implements Serializable {
 
     private Long toUid;
 
-    private String level;
+    private Integer level;
 
     public Long getId() {
         return id;
@@ -84,11 +84,11 @@ public class Comment implements Serializable {
     public void setToUid(Long toUid) {
         this.toUid = toUid;
     }
-    public String getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 

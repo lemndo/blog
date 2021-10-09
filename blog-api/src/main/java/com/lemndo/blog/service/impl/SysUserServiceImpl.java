@@ -6,10 +6,8 @@ import com.lemndo.blog.mapper.SysUserMapper;
 import com.lemndo.blog.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lemndo.blog.service.LoginService;
-import com.lemndo.blog.vo.ArticleBodyVo;
-import com.lemndo.blog.vo.ErrorCode;
-import com.lemndo.blog.vo.LoginUserVo;
-import com.lemndo.blog.vo.Result;
+import com.lemndo.blog.vo.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +27,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private LoginService loginService;
+
+    @Override
+    public UserVo findUserVoById(Long id) {
+        SysUser sysUser = sysUserMapper.selectById(id);
+        if (sysUser == null) {
+            sysUser = new SysUser();
+            sysUser.setId(1L);
+            sysUser.setAvatar("/static/img/logo.b3a48c0.png");
+            sysUser.setNickname("未知用户");
+        }
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(sysUser, userVo);
+        return userVo;
+    }
 
     @Override
     public SysUser findUserById(Long id) {

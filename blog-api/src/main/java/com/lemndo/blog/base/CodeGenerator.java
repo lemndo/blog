@@ -52,7 +52,7 @@ public class CodeGenerator {
                 .packageConfig(builder -> {
                     builder.parent("com.lemndo.blog") // 设置父包名
 //                            .moduleName("blog-api")
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "E:\\My_Java\\blog\\blog-api\\src\\main\\resources\\com.lemndo.blog.mapper")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "E:\\My_Java\\blog\\blog-api\\src\\main\\resources\\com\\lemndo\\blog\\mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude("ms_comment") // 设置需要生成的表名

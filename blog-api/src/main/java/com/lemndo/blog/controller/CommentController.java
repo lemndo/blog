@@ -1,7 +1,10 @@
 package com.lemndo.blog.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.lemndo.blog.service.ICommentService;
+import com.lemndo.blog.vo.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
@@ -13,8 +16,15 @@ import org.springframework.stereotype.Controller;
  * @author lemndo
  * @since 2021-10-09
  */
-@Controller
-@RequestMapping("/comment")
+@RestController
+@RequestMapping("/comments")
 public class CommentController {
 
+    @Autowired
+    private ICommentService commentService;
+
+    @GetMapping("article/{id}")
+    public Result comments(@PathVariable("id") Long id) {
+        return commentService.commentsByArticleId(id);
+    }
 }
