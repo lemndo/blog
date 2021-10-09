@@ -3,6 +3,7 @@ package com.lemndo.blog.service;
 import com.lemndo.blog.entity.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lemndo.blog.vo.CategoryVo;
+import com.lemndo.blog.vo.Result;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ import java.util.List;
 public interface ICategoryService extends IService<Category> {
 
     CategoryVo findCategoryById(Long categoryId);
+
+    Result findAll();
 }
