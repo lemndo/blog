@@ -1,6 +1,7 @@
 package com.lemndo.blog.controller;
 
 
+import com.lemndo.blog.common.aop.LogAnnotation;
 import com.lemndo.blog.service.IArticleService;
 import com.lemndo.blog.vo.ArticleVo;
 import com.lemndo.blog.vo.Result;
@@ -40,6 +41,7 @@ public class ArticleController {
      * @param pageParams
      */
     @PostMapping
+    @LogAnnotation(module="文章",operator="获取文章列表")
     public Result listArticle(@RequestBody PageParams pageParams) {
         return articleService.listArticle(pageParams);
     }
